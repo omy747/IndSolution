@@ -86,7 +86,9 @@ elseif($_SESSION['user_role'] == "manager")
 
 else
 {
-    redirect('pages/index');  
+    $data = [   ];       
+     $this->view('clients/index', $data);
+    //redirect('pages/index');  
 }              
     }
 

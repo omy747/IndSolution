@@ -9,7 +9,11 @@ class Pages extends Controller {
      }  elseif($_SESSION['user_role'] == "emp")  {
          redirect('emps/index'); 
      }   else {
-         redirect('pages/index');  
+        $data = [
+            'title' => 'Отраслевые решения 1С',
+            'description' => 'Внедряем решения от 1С в любой бизнес'    
+         ];       
+         $this->view('pages/index', $data); 
      }
     }   else   {
            $data = [

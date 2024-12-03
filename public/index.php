@@ -2,4 +2,4 @@
 
 // Init Core Library
 
-//$init = new Core();
+$init = new Core();

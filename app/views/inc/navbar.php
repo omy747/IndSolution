@@ -39,6 +39,9 @@
       echo '<li class="nav-item">
         <a class="nav-link" href="'.URLROOT.'/users/login">Авторизация</a>
       </li>'; 
+      echo '<li class="nav-item">
+      <a class="nav-link" href="'.URLROOT.'/users/login">Регистрация</a>
+    </li>'; 
       }
     ?></ul>   
     </div>

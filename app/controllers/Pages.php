@@ -13,8 +13,8 @@ class Pages extends Controller {
      }
     }   else   {
            $data = [
-              'title' => '',
-              'description' => ''    
+              'title' => 'Отраслевые решения 1С',
+              'description' => 'Внедряем решения от 1С в любой бизнес'    
            ];       
            $this->view('pages/index', $data);
         }   

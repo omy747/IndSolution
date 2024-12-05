@@ -45,4 +45,19 @@ $row = $this->db->single();
 
     return $row;
 }
+
+public function getUsers($param) {
+    $results = null;
+    if($param == null)
+    {
+    $this->db->query("select * from users");
+    $results = $this->db->resultSet();
+    } 
+    else
+    {
+    $this->db->query("select * from users where email like '%".$param."%' or login like '%".$param."%' or role like '%".$param."%' ");
+    $results = $this->db->resultSet();
+    }       
+    return $results;
+}
 }

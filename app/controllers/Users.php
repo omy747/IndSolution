@@ -76,7 +76,7 @@ else
 
 if($_SESSION['user_role'] == "admin")
 {
-    redirect('dashboard/index');
+    redirect('dashboard/users');
 }
 
 elseif($_SESSION['user_role'] == "manager")

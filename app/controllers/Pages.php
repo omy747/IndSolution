@@ -5,7 +5,7 @@ class Pages extends Controller {
     public function index(){ // запуск стартовой страницы приложения
         if(isLoggedIn())   {
            if($_SESSION['user_role'] == "admin"){
-         redirect('dashboard/index');
+         redirect('dashboard/users');
      }  elseif($_SESSION['user_role'] == "emp")  {
          redirect('emps/index'); 
      }   else {

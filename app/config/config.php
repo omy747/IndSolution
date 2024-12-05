@@ -10,6 +10,6 @@ define('APPROOT', dirname(dirname(__FILE__)));
 //Корневой URL
 define('URLROOT', 'http://localhost/IndSolution');
 //Имя сайта
-define('SITENAME', 'Отраслевые решения 1С');
+define('SITENAME', 'Корпоративные решения 1С');
 // Версия
 define('APPVERSION', '1.0.0');

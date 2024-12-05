@@ -93,4 +93,14 @@ public function editUser($data) {
         return false;
     }
  }
+
+ public function delUser($id) {
+    $this->db->query('delete from users where id = :id');     
+    $this->db->bind('id', $id);       
+    if($this->db->execute())    {
+        return true;
+    }    else    {
+        return false;
+    }
+ }
 }

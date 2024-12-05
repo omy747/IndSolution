@@ -156,4 +156,15 @@ else {
         }
 }
 
+public function delete($id) { // удаление пользователя
+    if($this->userModel->delUser($id)) {
+        flash('post_message', 'Пользователь удален.');
+// Переход к форме 
+redirect('dashboard/users');
+    }
+    else {
+        die('Ошибка!');
+        }
+}
+
 }

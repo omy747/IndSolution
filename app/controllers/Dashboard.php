@@ -182,5 +182,167 @@ public function emps() { // страница с сотрудниками
     $this->view('dashboard/emps', $data);
 }
 
+public function addemp() { //добавление нового сотрудника
+    $users = $this->userModel->getUsers(null);
+     // Проверка метода отправки данных (должен быть POST)
+     if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+        // Санитизация
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);        
+        //Загрузка данных из формы
+        $data = [ 
+            'users'  => $users,          
+            'lname' => trim($_POST['lname']),
+            'fname' => trim($_POST['fname']),
+            'patr' => trim($_POST['patr']),
+            'place' => trim($_POST['place']),
+            'department' => trim($_POST['department']),
+            'h_date' => trim($_POST['h_date']),
+            'user' => trim($_POST['user']),                           
+            'lname_err' => '',
+            'fname_err' => '',
+            'patr_err' => '',
+            'h_date_err' => ''                     
+        ];
+        //Валидация 
+        if(empty($data['lname']))
+        {
+            $data['lname_err'] = 'Укажите фамилию сотрудника.';
+        }  
+        if(empty($data['fname']))
+        {
+            $data['fname_err'] = 'Укажите имя сотрудника.';
+        }  
+        
+        if(empty($data['patr']))
+        {
+            $data['patr_err'] = 'Укажите отчество сотрудника.';
+        }  
+
+        if(empty($data['h_date']))
+        {
+            $data['h_date_err'] = 'Укажите дату найма сотрудника.';
+        }       
+        // Проверка отсутсвия ошибок
+        if(empty($data['lname_err']) && empty($data['fname_err']) && empty($data['h_date_err']))
+        {
+if($this->empModel->addEmp($data))
+{
+flash('post_message', 'Сотрудник добавлен.');
+// Переход к форме 
+redirect('dashboard/emps');
+} else {
+die('Ошибка!');
+}
+}        else
+        {
+            //Зaгрузка представления с ошибками
+            $this->view('dashboard/addemp', $data);
+        }
+    }    else {
+        
+        // Зaгрузка данных из формы     
+        $data = [ 
+            'users' => $users,
+            'lname' => '',
+            'fname' => '',
+            'patr' => '',
+            'place' => '',
+            'department' => '',
+            'h_date' => '',
+            'user' => '',                           
+            'lname_err' => '',
+            'fname_err' => '',
+            'patr_err' => '',
+            'h_date_err' => ''        
+       ];       
+       // Загрузка представления
+       $this->view('dashboard/addemp', $data);
+            }
+}
+
+public function editemp($id) { // редактирование сотрудника
+    $users = $this->userModel->getUsers(null);
+     // Проверка метода отправки данных (должен быть POST)
+     if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+        // Санитизация
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);        
+        //Загрузка данных из формы
+        $data = [ 
+            'id' => $id,
+            'users'  => $users,          
+            'lname' => trim($_POST['lname']),
+            'fname' => trim($_POST['fname']),
+            'patr' => trim($_POST['patr']),
+            'place' => trim($_POST['place']),
+            'department' => trim($_POST['department']),
+            'h_date' => trim($_POST['h_date']),
+            'user' => trim($_POST['user']),                           
+            'lname_err' => '',
+            'fname_err' => '',
+            'patr_err' => '',
+            'h_date_err' => ''                        
+        ];
+        //Валидация 
+        if(empty($data['lname']))
+        {
+            $data['lname_err'] = 'Укажите фамилию сотрудника.';
+        }     
+        if(empty($data['fname']))
+        {
+            $data['fname_err'] = 'Укажите имя сотрудника.';
+        }        
+
+        if(empty($data['h_date']))
+        {
+            $data['hdate_err'] = 'Укажите дату найма сотрудника.';
+        }       
+        // Проверка отсутсвия ошибок
+        if(empty($data['lname_err']) && empty($data['fname_err']) && empty($data['h_date_err']))
+        {
+if($this->empModel->editEmp($data)){
+flash('post_message', 'Запись о сотруднике изменена.');
+// Переход к форме 
+redirect('dashboard/emps');
+} else {
+die('Ошибка!');
+}
+}        else
+        {
+            //Зaгрузка представления с ошибками
+            $this->view('dashboard/editemp', $data);
+        }
+    }    else {
+        $emp = $this->empModel->getEmpById($id);
+        // Зaгрузка данных из формы     
+        $data = [ 
+            'id' => $id,
+            'users' => $users, 
+            'lname' => $emp->lname,
+            'fname' => $emp->fname,
+            'patr' => $emp->patr,
+            'place' => $emp->place,
+            'department' => $emp->department,
+            'h_date' => $emp->h_date,
+            'user' => $emp->ur_id,                           
+            'lname_err' => '',
+            'fname_err' => '',
+            'patr_err' => '',
+            'h_date_err' => ''    
+       ];       
+       // Загрузка представления
+       $this->view('dashboard/editemp', $data);
+            }
+}
+
+public function delEmp($id) { // удаление сотрудника
+    if($this->empModel->delEmp($id)) {
+        flash('post_message', 'Сотрудник удален.');
+// Переход к форме 
+redirect('dashboard/emps');
+    }
+    else {
+        die('Ошибка!');
+        }
+}
 
 }

@@ -20,21 +20,6 @@ public function getEmps($param) {
     return $results;
 }
 
-public function addEmp($data) {
-    $this->db->query('INSERT INTO employees(FIO, place, hdate, user_id) VALUES (:FIO, :place, :hdate, :user_id)');
-    //привязка параметров
-    $this->db->bind('FIO', $data['fio']);
-    $this->db->bind('place', $data['place']);
-    $this->db->bind('hdate', $data['hdate']);    
-    $this->db->bind('user_id', $data['user']); 
-    // выполнение
-    if($this->db->execute())    {
-        return true;
-    }     else     {
-        return false;
-    }
-}
-
 public function getEmpById($id) {
     $this->db->query('select * from employees where empid = :id');
     $this->db->bind('id', $id);
@@ -49,13 +34,34 @@ public function getEmpByUserId($id) {
     return $row;
 }
 
-public function  editEmp($data)   {
-    $this->db->query('update employees set FIO=:FIO, place=:place, hdate=:hdate, user_id=:user_id where empId=:id');   
-    $this->db->bind('id', $data['id']);
-    $this->db->bind('FIO', $data['fio']);
+public function addEmp($data) {
+    $this->db->query('INSERT INTO employees(lname, fname, patr, place, department, ur_id, h_date) VALUES (:lname, :fname, :patr, :place, :department, :ur_id, :h_date)');
+    //привязка параметров
+    $this->db->bind('lname', $data['lname']);
+    $this->db->bind('fname', $data['fname']);
+    $this->db->bind('patr', $data['patr']);
     $this->db->bind('place', $data['place']);
-    $this->db->bind('hdate', $data['hdate']);    
-    $this->db->bind('user_id', $data['user']);     
+    $this->db->bind('department', $data['department']);
+    $this->db->bind('h_date', $data['h_date']);    
+    $this->db->bind('ur_id', $data['user']); 
+    // выполнение
+    if($this->db->execute())    {
+        return true;
+    }     else     {
+        return false;
+    }
+}
+
+public function  editEmp($data)   {
+    $this->db->query('update employees set lname=:lname, fname=:fname, patr=:patr, place=:place, department=:department, ur_id=:ur_id, h_date=:h_date where empId=:id');   
+    $this->db->bind('id', $data['id']);
+    $this->db->bind('lname', $data['lname']);
+    $this->db->bind('fname', $data['fname']);
+    $this->db->bind('patr', $data['patr']);
+    $this->db->bind('place', $data['place']);
+    $this->db->bind('department', $data['department']);
+    $this->db->bind('h_date', $data['h_date']);    
+    $this->db->bind('ur_id', $data['user']);   
     if($this->db->execute())    {
         return true;
     }    else    {

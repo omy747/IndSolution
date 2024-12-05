@@ -167,4 +167,20 @@ redirect('dashboard/users');
         }
 }
 
+public function emps() { // страница с сотрудниками
+    $data = [];
+    $emps = null;      
+    if(isset($_POST["search"]))    { 
+        $param = trim($_POST["fsearch"]);
+        $emps = $this->empModel->getEmps($param); 
+    } else {
+        $emps = $this->empModel->getEmps(null);        
+    }       
+    $data = [
+        'emps' => $emps           
+    ];
+    $this->view('dashboard/emps', $data);
+}
+
+
 }

@@ -12,4 +12,4 @@ define('URLROOT', 'http://localhost/IndSolution');
 //Имя сайта
 define('SITENAME', 'Корпоративные решения 1С');
 // Версия
-define('APPVERSION', '1.0.0');
+define('APPVERSION', '1.0.0');  

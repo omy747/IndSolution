@@ -2,7 +2,6 @@
 <div class="mt-5 mb-3">
 <?php flash('post_message'); ?>
 </div>
-<a class="btn btn-light mb-2" href="<?php echo URLROOT; ?>/dashboard/index">Назад</a>
 <h1 class="mt-2 mb-3 text-center">Пользователи</h1>
 <div class="row">
 <div class="offset-md-4 col-md-4 offset-md-4 col-12">

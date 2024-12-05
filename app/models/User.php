@@ -60,4 +60,24 @@ public function getUsers($param) {
     }       
     return $results;
 }
+
+//Регистрация
+public function register($data)
+{
+    $this->db->query('INSERT INTO `users`(email, password, role, login, u_group, reg_date, p_upd_date) values (:email, :password, :role, :login, :u_group, :reg_date, :p_upd_date)');
+    //привязка параметров    
+    $this->db->bind('email', $data['email']);
+    $this->db->bind('password', $data['password']);
+    $this->db->bind('role', $data['role']);
+    $this->db->bind('login', '');   
+    $this->db->bind('u_group', $data['role']);  
+    $this->db->bind('reg_date', date('Y-m-d')); 
+    $this->db->bind('p_upd_date', date('Y-m-d'));   
+    // Выполнение запроса
+    if($this->db->execute())    {
+        return true;
+    }    else    {
+        return false;
+    }
+}
 }

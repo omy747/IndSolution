@@ -9,7 +9,12 @@
       <?php if(isset($_SESSION['user_id'])) {
         if($_SESSION['user_role'] == "admin") {
           ?>
-           
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/dashboard/users">Пользователи</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/dashboard/emps">Сотрудники</a>
+        </li> 
           <?php
         }
         elseif($_SESSION['user_role'] == "emp") {

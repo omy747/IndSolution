@@ -80,4 +80,17 @@ public function register($data)
         return false;
     }
 }
+
+public function editUser($data) {    
+    $this->db->query('UPDATE users SET email=:email, password=:password, role=:role, u_group=:role where id=:id');
+    $this->db->bind('password', $data['password']);
+    $this->db->bind('email', $data['email']);
+    $this->db->bind('role', $data['role']);    
+    $this->db->bind('id', $data['id']);    
+    if($this->db->execute())    {
+        return true;
+    }     else     {
+        return false;
+    }
+ }
 }

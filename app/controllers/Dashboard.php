@@ -92,4 +92,68 @@ die('Ошибка!');
             }
 }
 
+public function changerules($id) { // редактирование записи о пользователе
+    // Проверка метода отправки данных (должен быть POST)
+if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+    // Санитизация
+    $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);       
+    //Загрузка данных из формы
+    $data = [ 
+        'id' => $id,
+        'email' => trim($_POST['email']),
+        'role' => trim($_POST['role']),
+        'password' =>trim($_POST['password']),            
+        'email_err' => '',
+        'password_err' => ''               
+    ];
+    //Валидация почты
+    if(empty($data['email']))
+    {
+        $data['email_err'] = 'Укажите электронный адрес.';
+    }   
+    //Валидация пароля
+    if(empty($data['password']))
+    {
+        $data['password_err'] = 'Введите пароль.';
+    }
+    elseif(strlen($data['password']) < 6)
+    {
+        $data['password_err'] = 'Длина пароля не менее 6 символов.';
+    }
+    // Проверка отсутсвия ошибок
+    if(empty($data['email_err']) && empty($data['password_err']))
+    {  
+//Регистрация пользователя
+if($this->userModel->editUser($data))
+{
+flash('post_message', 'Данные пользователя изменены.');
+// Переход к форме авторизации
+redirect('dashboard/users');
+}
+else {
+die('Ошибка!');
+}
+}
+    else
+    {
+        //Зaгрузка представления с ошибками
+        $this->view('dashboard/changerules', $data);
+    }
+}
+else {
+    $user = $this->userModel->getUserById($id);
+    // Зaгрузка данных из формы       
+   $data = [    
+    'id'    => $id,
+    'email' => $user->email,
+    'role' => $user->role,
+    'password' =>$user->password,        
+    'email_err' => '',
+    'password_err' => ''              
+   ];   
+   // Загрузка представления
+   $this->view('dashboard/changerules', $data);
+        }
+}
+
 }

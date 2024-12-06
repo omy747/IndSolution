@@ -33,4 +33,20 @@ public function getCats($param) {
         return false;
     }
 }
+
+public function editCategory($data) {
+    $this->db->query('update categories set cat_title=:cat_title, cat_desc=:cat_desc, p_amount=:p_amount, distance=:distance where catId=:id');
+    //привязка параметров
+    $this->db->bind('id', $data['id']);
+    $this->db->bind('cat_title', $data['title']);
+    $this->db->bind('cat_desc', $data['desc']);
+    $this->db->bind('p_amount', $data['amount']);
+    $this->db->bind('distance', $data['dist']);    
+    // выполнение
+    if($this->db->execute())    {
+        return true;
+    }     else     {
+        return false;
+    }
+}
 }

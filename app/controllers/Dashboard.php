@@ -7,6 +7,158 @@ class Dashboard extends Controller {
         $this->prodModel = $this->model('Product');
        }
 
+       public function addprod() {
+        $cats = $this->catModel->getCats(null);    
+        // Проверка метода отправки данных (должен быть POST)
+        if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+            // Санитизация
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);       
+            //Загрузка данных из формы
+            $data = [ 
+                'cats'  => $cats,
+                'title' => trim($_POST['title']),
+                'cat_id' => trim($_POST['cat']),   
+                'workers' => trim($_POST['workers']),   
+                'version' => trim($_POST['version']),   
+                'price' => trim($_POST['price']),   
+                'platform' => trim($_POST['platform']),   
+                'desc' => trim($_POST['desc']),                    
+                'title_err' => '',            
+                'desc_err' => ''               
+            ];
+            //Валидация 
+            if(empty($data['title']))
+            {
+                $data['title_err'] = 'Укажите название.';
+            }        
+            //Валидация 
+            if(empty($data['desc']))
+            {
+                $data['desc_err'] = 'Укажите описание.';
+            } 
+            // Проверка отсутсвия ошибок
+            if(empty($data['title_err']) && empty($data['desc_err']))
+            {  
+    //Регистрация пользователя
+    if($this->prodModel->addProduct($data))
+    {
+    flash('post_message', 'Решение добавлено.');
+    // Переход к форме авторизации
+    redirect('dashboard/prods');
+    }
+    else {
+    die('Ошибка!');
+    }
+    }
+            else
+            {
+                //Зaгрузка представления с ошибками
+                $this->view('dashboard/addprod', $data);
+            }
+        }
+        else {
+            // Зaгрузка данных из формы       
+           $data = [        
+            'cats'  => $cats,
+            'title' => '',
+            'cat_id' => '',   
+            'workers' => '',   
+            'version' => '',   
+            'price' => '',   
+            'platform' => '',   
+            'desc' => '',                    
+            'title_err' => '',            
+            'desc_err' => ''              
+           ];
+           
+           // Загрузка представления
+           $this->view('dashboard/addprod', $data);
+                }
+    }
+
+    public function editprod($id) {
+        $cats = $this->catModel->getCats(null);    
+        // Проверка метода отправки данных (должен быть POST)
+        if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+            // Санитизация
+            $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);       
+            //Загрузка данных из формы
+            $data = [ 
+                'id' => $id,
+                'cats'  => $cats,
+                'title' => trim($_POST['title']),
+                'cat_id' => trim($_POST['cat']),   
+                'workers' => trim($_POST['workers']),   
+                'version' => trim($_POST['version']),   
+                'price' => trim($_POST['price']),   
+                'platform' => trim($_POST['platform']),   
+                'desc' => trim($_POST['desc']),                    
+                'title_err' => '',            
+                'desc_err' => ''               
+            ];
+            //Валидация 
+            if(empty($data['title']))
+            {
+                $data['title_err'] = 'Укажите название.';
+            }        
+            //Валидация 
+            if(empty($data['desc']))
+            {
+                $data['desc_err'] = 'Укажите описание.';
+            } 
+            // Проверка отсутсвия ошибок
+            if(empty($data['title_err']) && empty($data['desc_err']))
+            {  
+    //Регистрация пользователя
+    if($this->prodModel->editProduct($data))
+    {
+    flash('post_message', 'Решение изменено.');
+    // Переход к форме авторизации
+    redirect('dashboard/prods');
+    }
+    else {
+    die('Ошибка!');
+    }
+    }
+            else
+            {
+                //Зaгрузка представления с ошибками
+                $this->view('dashboard/editprod', $data);
+            }
+        }
+        else {
+            // Зaгрузка данных из формы  
+            $prod = $this->prodModel->getProductById($id);  
+           $data = [  
+            'id'      => $id,
+            'cats'  => $cats,
+            'title' => $prod->title,
+            'cat_id' => $prod->cat_id,   
+            'workers' => $prod->workers,   
+            'version' => $prod->version,   
+            'price' => $prod->price,   
+            'platform' => $prod->platform,   
+            'desc' => $prod->descr,                    
+            'title_err' => '',            
+            'desc_err' => ''              
+           ];
+           
+           // Загрузка представления
+           $this->view('dashboard/editprod', $data);
+                }
+    }
+
+    public function delprod($id) { // удаление 
+        if($this->prodModel->delProduct($id)) {
+            flash('post_message', 'Решение удалено.');
+    // Переход к форме 
+    redirect('dashboard/prods');
+        }
+        else {
+            die('Ошибка!');
+            }
+    }    
+
        public function prods() { // страница с решениями
         $data = [];
         $prods = null;      

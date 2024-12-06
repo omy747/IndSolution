@@ -22,6 +22,21 @@ class Dashboard extends Controller {
         $this->view('dashboard/users', $data);
 }
 
+public function cats() { // страница с сотрудниками
+    $data = [];
+    $cats = null;      
+    if(isset($_POST["search"]))    { 
+        $param = trim($_POST["fsearch"]);
+        $cats = $this->catModel->getCats($param); 
+    } else {
+        $cats = $this->catModel->getCats(null);        
+    }       
+    $data = [
+        'cats' => $cats           
+    ];
+    $this->view('dashboard/cats', $data);
+}
+
 public function adduser() { // добавление нового пользователя
     // Проверка метода отправки данных (должен быть POST)
     if($_SERVER['REQUEST_METHOD'] == 'POST') { 

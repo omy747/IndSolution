@@ -73,4 +73,8 @@ $this->stmt->bindValue($param, $value, $type);
     public function rowCount() {
     return $this->stmt->rowCount();
     }
+
+    public function lastId() {
+        return $this->dbh->lastInsertId();
+    }
 }

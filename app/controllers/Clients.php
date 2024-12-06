@@ -5,6 +5,34 @@ class Clients extends Controller {
         $this->clientModel = $this->model('Client');
         $this->catModel = $this->model('Category');
         $this->prodModel = $this->model('Product');
+        $this->messageModel = $this->model('Message');
+       }
+
+
+       public function feedback() {
+        if($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $data = [
+                'text' => trim($_POST['mtext'])    ,
+                'text_err' => ''
+            ];
+            if(empty($data['text'])) {
+                $data['text_err'] = "Укажите текст сообщения";
+                }
+                if(empty($data['text_err'] )) {
+                    $this->messageModel->saveMessage($data);                   
+                    flash('post_message', 'Сообщение отправлено.');    
+                // Переход к форме 
+                redirect('clients/index');
+                } else {
+                    $this->view('clients/feedback', $data);
+                }        
+        } else {
+            $data = [
+                'text' => ''    ,
+                'text_err' => ''
+            ];
+            $this->view('clients/feedback', $data);
+        }
        }
 
        public function my_prods() {

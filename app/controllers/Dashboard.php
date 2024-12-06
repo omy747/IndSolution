@@ -22,6 +22,67 @@ class Dashboard extends Controller {
         $this->view('dashboard/users', $data);
 }
 
+public function addcat() { // добавление нового пользователя
+    // Проверка метода отправки данных (должен быть POST)
+    if($_SERVER['REQUEST_METHOD'] == 'POST') { 
+        // Санитизация
+        $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);       
+        //Загрузка данных из формы
+        $data = [ 
+            'title' => trim($_POST['title']),
+            'desc' => trim($_POST['desc']),
+            'amount' =>trim($_POST['amount']), 
+            'dist' =>trim($_POST['dist']),            
+            'title_err' => '',
+            'desc_err' => ''               
+        ];
+        //Валидация почты
+        if(empty($data['title']))
+        {
+            $data['title_err'] = 'Укажите название.';
+        }        
+        //Валидация пароля
+        if(empty($data['desc']))
+        {
+            $data['desc_err'] = 'Укажите описание.';
+        }        
+        // Проверка отсутсвия ошибок
+        if(empty($data['title_err']) && empty($data['desc_err']))
+        {  
+//Регистрация пользователя
+if($this->catModel->addCategory($data))
+{
+flash('post_message', 'Категория добавлена.');
+// Переход к форме авторизации
+redirect('dashboard/cats');
+}
+else {
+die('Ошибка!');
+}
+}
+        else
+        {
+            //Зaгрузка представления с ошибками
+            $this->view('dashboard/addcat', $data);
+        }
+    }
+    else {
+        // Зaгрузка данных из формы       
+       $data = [        
+        'title' => '',
+            'desc' => '',
+            'amount' =>'', 
+            'dist' =>'',            
+            'title_err' => '',
+            'desc_err' => ''              
+       ];
+       
+       // Загрузка представления
+       $this->view('dashboard/addcat', $data);
+            }
+}
+
+
 public function cats() { // страница с сотрудниками
     $data = [];
     $cats = null;      

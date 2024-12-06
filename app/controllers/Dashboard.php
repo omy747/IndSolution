@@ -4,6 +4,21 @@ class Dashboard extends Controller {
         $this->userModel = $this->model('User');
        }
 
+       public function prods() { // страница с решениями
+        $data = [];
+        $prods = null;      
+        if(isset($_POST["search"]))    { 
+            $param = trim($_POST["fsearch"]);
+            $prods = $this->prodModel->getProds($param); 
+        } else {
+            $prods = $this->prodModel->getProds(null);        
+        }       
+        $data = [
+            'prods' => $prods           
+        ];
+        $this->view('dashboard/prods', $data);
+    }
+
        public function users() {
         $data = [];
         $users = null;      

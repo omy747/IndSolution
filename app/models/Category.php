@@ -49,4 +49,16 @@ public function editCategory($data) {
         return false;
     }
 }
+public function delCategory($id) {
+    $this->db->query('delete from categories where catId = :id');     
+    $this->db->bind('id', $id);
+    if($this->db->execute())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
 }

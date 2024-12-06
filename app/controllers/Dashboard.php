@@ -2,6 +2,9 @@
 class Dashboard extends Controller {
     public function __construct() {
         $this->userModel = $this->model('User');
+        $this->empModel = $this->model('Employee');
+        $this->catModel = $this->model('Category');
+        $this->prodModel = $this->model('Product');
        }
 
        public function prods() { // страница с решениями

@@ -85,6 +85,17 @@ die('Ошибка!');
             }
 }
 
+public function delcat($id) { // удаление категории
+    if($this->catModel->delCategory($id)) {
+        flash('post_message', 'Категория удалена.');
+// Переход к форме 
+redirect('dashboard/cats');
+    }
+    else {
+        die('Ошибка!');
+        }
+}
+
 public function addcat() { // добавление нового пользователя
     // Проверка метода отправки данных (должен быть POST)
     if($_SERVER['REQUEST_METHOD'] == 'POST') { 

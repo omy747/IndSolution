@@ -15,6 +15,9 @@
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/dashboard/emps">Сотрудники</a>
         </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/dashboard/cats">Категории</a>
+        </li> 
           <?php
         }
         elseif($_SESSION['user_role'] == "emp") {

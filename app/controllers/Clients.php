@@ -8,7 +8,6 @@ class Clients extends Controller {
         $this->messageModel = $this->model('Message');
        }
 
-
        public function feedback() {
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $data = [
@@ -34,7 +33,7 @@ class Clients extends Controller {
             $this->view('clients/feedback', $data);
         }
        }
-
+       
        public function my_prods() {
         $data = [];
         $prods = null;      

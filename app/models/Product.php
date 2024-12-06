@@ -5,21 +5,57 @@ public function __construct(){
     $this->db = new Database;
 }
 
-public function getProds($param) {
+public function delProdFromCl($id) {
+    $this->db->query('delete from client_products where cpId = :id');     
+    $this->db->bind('id', $id);
+    if($this->db->execute())
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+}
+
+public function getClientProds($id) {
+ $this->db->query("SELECT * FROM clients c, products p, client_products cp where cp.prod_id=p.prodId and cp.client_id=c.clId and c.clId=".$id);
+ $results = $this->db->resultSet();
+ return $results;
+}
+
+
+public function getUserProds($param) {
     $results = null;
-       if($param == null)
-       {
-       $this->db->query("SELECT * FROM products p, categories c where p.cat_id=c.catId");
-       $results = $this->db->resultSet();
-       } 
-       else
-       {
-       $this->db->query("SELECT * FROM products p, categories c WHERE p.cat_id=c.catId and title like '%".$param."%' or descr like '%".$param."%'");
-       $results = $this->db->resultSet();
-       }       
-       return $results;
-   }
-   public function addProduct($data) {
+    if($param == null)
+    {
+    $this->db->query("select * from users u, clients c, client_products cp, products p where p.prodId=cp.prod_id and u.id=c.usr_id and c.clId=cp.client_id and u.id=".$_SESSION['user_id'].";");
+    $results = $this->db->resultSet();
+    } 
+    else
+    {
+        $this->db->query("select * from users u, clients c, client_products cp, products p where   p.title like '%".$param."%' and p.prodId=cp.prod_id and u.id=c.usr_id and c.clId=cp.client_id and u.id=".$_SESSION['user_id'].";");
+    $results = $this->db->resultSet();
+    }       
+    return $results;
+}
+
+public function getProds($param) {
+ $results = null;
+    if($param == null)
+    {
+    $this->db->query("SELECT * FROM products p, categories c where p.cat_id=c.catId");
+    $results = $this->db->resultSet();
+    } 
+    else
+    {
+    $this->db->query("SELECT * FROM products p, categories c WHERE p.cat_id=c.catId and title like '%".$param."%' or descr like '%".$param."%'");
+    $results = $this->db->resultSet();
+    }       
+    return $results;
+}
+
+public function addProduct($data) {
     $this->db->query('INSERT INTO products(title, cat_id, workers, version, price, platform, descr) VALUES (:title, :cat_id, :workers, :version, :price, :platform, :descr)');
     //привязка параметров
     $this->db->bind('title', $data['title']);

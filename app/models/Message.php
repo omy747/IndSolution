@@ -4,6 +4,15 @@ class Message {
 public function __construct(){
     $this->db = new Database;
 }
+
+public function getEmpMessages() {
+    $this->db->query("SELECT * FROM user_messages um, messages m, clients c where m.messId=um.mess_id and  c.usr_id=um.sender_id and um.reciever_id=".$_SESSION['user_id']);
+    $results = $this->db->resultSet();
+    return $results;  
+}  
+
+
+
 public function saveMessage($data) {
     $this->db->query('INSERT INTO messages(m_text, IP, device, country, city, status, op_s) VALUES (:m_text, :IP, :device, :country, :city, :status, :op_s)');
     //привязка параметров

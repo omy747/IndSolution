@@ -9,7 +9,7 @@
       <?php if(isset($_SESSION['user_id'])) {
         if($_SESSION['user_role'] == "admin") {
           ?>
-        <li class="nav-item">
+           <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/dashboard/users">Пользователи</a>
         </li> 
         <li class="nav-item">
@@ -25,12 +25,17 @@
         }
         elseif($_SESSION['user_role'] == "manager") {
           ?>
-                   
+            <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/managers/index">Решения клиента</a>
+        </li>   
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/managers/my_messages">Сообщения</a>
+        </li>         
           <?php
         }
         elseif($_SESSION['user_role'] == "user") {
           ?>
-            <li class="nav-item">
+           <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/clients/prods">Каталог</a>
         </li> 
         <li class="nav-item">
@@ -39,16 +44,21 @@
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/clients/my_prods">Мои решения</a>
         </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/clients/feedback">Обратная связь</a>
+        </li> 
           <?php
         }
-      } else {
+      }
+      else {
         ?>
          <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT; ?>/clients/prods">Каталог</a>
         </li> 
         <?php
       }
-       ?>
+      
+      ?>
       </ul>
       <ul class="navbar-nav ml-auto">
     <?php if(isset($_SESSION['user_id'])) 

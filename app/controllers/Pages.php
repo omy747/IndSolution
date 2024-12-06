@@ -7,13 +7,13 @@ class Pages extends Controller {
            if($_SESSION['user_role'] == "admin"){
          redirect('dashboard/users');
      }  elseif($_SESSION['user_role'] == "manager")  {
-         redirect('emps/index'); 
+         redirect('managers/index'); 
      }   else {
-        $data = [
-            'title' => 'Отраслевые решения 1С',
-            'description' => 'Внедряем решения от 1С в любой бизнес'    
-         ];       
-         $this->view('pages/index', $data); 
+          $data = [
+              'title' => 'Отраслевые решения 1С',
+              'description' => 'Внедряем решения от 1С в любой бизнес'    
+           ];       
+           $this->view('pages/index', $data);
      }
     }   else   {
            $data = [
@@ -23,5 +23,4 @@ class Pages extends Controller {
            $this->view('pages/index', $data);
         }   
      }
-     
 }

@@ -6,7 +6,7 @@ class Pages extends Controller {
         if(isLoggedIn())   {
            if($_SESSION['user_role'] == "admin"){
          redirect('dashboard/users');
-     }  elseif($_SESSION['user_role'] == "emp")  {
+     }  elseif($_SESSION['user_role'] == "manager")  {
          redirect('emps/index'); 
      }   else {
         $data = [

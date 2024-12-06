@@ -23,17 +23,32 @@
         </li> 
           <?php
         }
-        elseif($_SESSION['user_role'] == "emp") {
+        elseif($_SESSION['user_role'] == "manager") {
           ?>
                    
           <?php
         }
         elseif($_SESSION['user_role'] == "user") {
           ?>
-           
+            <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/clients/prods">Каталог</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/clients/index">Профиль</a>
+        </li> 
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/clients/my_prods">Мои решения</a>
+        </li> 
           <?php
         }
-      } ?>
+      } else {
+        ?>
+         <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT; ?>/clients/prods">Каталог</a>
+        </li> 
+        <?php
+      }
+       ?>
       </ul>
       <ul class="navbar-nav ml-auto">
     <?php if(isset($_SESSION['user_id'])) 

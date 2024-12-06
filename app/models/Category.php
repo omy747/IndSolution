@@ -19,5 +19,18 @@ public function getCats($param) {
        }       
        return $results;
    }
-
+   public function addCategory($data) {
+    $this->db->query('INSERT INTO categories(cat_title, cat_desc, p_amount, distance) VALUES (:cat_title, :cat_desc, :p_amount, :distance)');
+    //привязка параметров
+    $this->db->bind('cat_title', $data['title']);
+    $this->db->bind('cat_desc', $data['desc']);
+    $this->db->bind('p_amount', $data['amount']);
+    $this->db->bind('distance', $data['dist']);    
+    // выполнение
+    if($this->db->execute())    {
+        return true;
+    }     else     {
+        return false;
+    }
+}
 }
